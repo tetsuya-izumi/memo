@@ -21,3 +21,19 @@ function addNewNote(text = '') {
     // bodyの子要素として追加
     document.body.appendChild(note)
 }
+
+
+function addNewNote(text = '') {
+    // div要素を作成
+    // noteクラスを追加
+ 
+    // メモ帳を追加
+    ...
+ 
+    // 操作に必要な要素を取得
+    const editBtn = note.querySelector('.edit')
+    const deleteBtn = note.querySelector('.delete')
+    const main = note.querySelector('.main')
+    const textArea = note.querySelector('textarea')
+ 
+}
