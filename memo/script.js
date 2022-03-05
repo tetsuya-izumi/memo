@@ -46,9 +46,9 @@ function addNewNote(text = '') {
     // テキストエリアのイベント
     textArea.addEventListener('input', (e) => {
         const { value } = e.target
- 
+
         main.innerHTML = marked(value)
- 
+
         // ローカルストレージの更新
         updateLS()
     })
@@ -72,7 +72,16 @@ function deleteNote(note) {
 }
 
 
+// ローカルストレージにメモ帳を保存
 function updateLS() {
-    // 後で実装
+    // 要素を取得
+    const notesText = document.querySelectorAll('textarea')
+ 
+    const notes = []
+ 
+    // 要素を格納
+    notesText.forEach(note => notes.push(note.value))
+ 
+    // notesという名前でローカルストレージを保存
+    localStorage.setItem('notes', JSON.stringify(notes))
 }
-
