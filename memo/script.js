@@ -28,17 +28,51 @@ function addNewNote(text = '') {
     const main = note.querySelector('.main')
     const textArea = note.querySelector('textarea')
 
+    // テキストエリアに引数で渡したテキストを代入
+    // 新規/編集があるのでこうしている
+    textArea.value = text
+    // markedは、HTMLに追加したプラグイン
+    main.innerHTML = marked(text)
+
     // 削除のクリックイベントの登録
     deleteBtn.addEventListener('click', () => {
         deleteNote(note)
+
+     // 編集ボタンのクリックイベント
+     editBtn.addEventListener('click', () => {
+         editNote(main, textArea)
+     })
+
+    // テキストエリアのイベント
+    textArea.addEventListener('input', (e) => {
+        const { value } = e.target
+ 
+        main.innerHTML = marked(value)
+ 
+        // ローカルストレージの更新
+        updateLS()
     })
+
+})
+
+// メモ帳編集
+function editNote(main, textArea) {
+    // hiddenがついているものは消し、ついてないものは付与する
+    main.classList.toggle('hidden')
+    textArea.classList.toggle('hidden')
+}
+
     // メモ帳削除
 function deleteNote(note) {
     // ノートを削除
-    note.remove()
-  
+    note.remove()  
     // ローカルストレージの更新
     updateLS()
   }
+}
+
+
+function updateLS() {
+    // 後で実装
 }
 
