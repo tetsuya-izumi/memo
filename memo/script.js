@@ -1,6 +1,14 @@
 // 要素を取得する
 const addBtn = document.getElementById('add')
 
+// ローカルストレージからデータを取得する
+const notes = JSON.parse(localStorage.getItem('notes'))
+
+// メモ帳追加処理を実行
+if(notes) {
+    notes.forEach(note => addNewNote(note))
+}
+
 // 作成ボタンのクリックイベントの登録
 addBtn.addEventListener('click', () => addNewNote())
 
@@ -19,9 +27,6 @@ function addNewNote(text = '') {
     <div class="main ${text ? "" : "hidden"}"></div>
     <textarea class="${text ? "hidden" : ""}"></textarea>
     `
-    // bodyの子要素として追加
-    document.body.appendChild(note)
-
     // 操作に必要な要素を取得
     const editBtn = note.querySelector('.edit')
     const deleteBtn = note.querySelector('.delete')
@@ -42,6 +47,12 @@ function addNewNote(text = '') {
      editBtn.addEventListener('click', () => {
          editNote(main, textArea)
      })
+     // メモ帳編集
+     function editNote(main, textArea) {
+         // hiddenがついているものは消し、ついてないものは付与する
+         main.classList.toggle('hidden')
+         textArea.classList.toggle('hidden')
+     }
 
     // テキストエリアのイベント
     textArea.addEventListener('input', (e) => {
@@ -52,15 +63,12 @@ function addNewNote(text = '') {
         // ローカルストレージの更新
         updateLS()
     })
-
+    
 })
 
-// メモ帳編集
-function editNote(main, textArea) {
-    // hiddenがついているものは消し、ついてないものは付与する
-    main.classList.toggle('hidden')
-    textArea.classList.toggle('hidden')
-}
+// bodyの子要素として追加
+document.body.appendChild(note)
+
 
     // メモ帳削除
 function deleteNote(note) {
@@ -72,7 +80,8 @@ function deleteNote(note) {
 }
 
 
-// ローカルストレージにメモ帳を保存
+
+    // ローカルストレージにメモ帳を保存
 function updateLS() {
     // 要素を取得
     const notesText = document.querySelectorAll('textarea')
@@ -85,3 +94,4 @@ function updateLS() {
     // notesという名前でローカルストレージを保存
     localStorage.setItem('notes', JSON.stringify(notes))
 }
+
